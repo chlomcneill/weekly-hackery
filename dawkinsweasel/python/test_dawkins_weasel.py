@@ -1,5 +1,5 @@
 from unittest import TestCase
-from dawkinsweasel.dawkins_weasel import score_string
+from dawkins_weasel import score_string
 
 
 class TestDawkinsWeasel(TestCase):
