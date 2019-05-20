@@ -1,6 +1,5 @@
 import string
 import random
-import pprint
 
 characters = list(string.ascii_uppercase + ' ')
 
@@ -30,7 +29,7 @@ def score_string(string):
 
 
 def monkey_simulator(string):
-    list_of_strings = [reproduce_string(string) for i in range(100)]
+    list_of_strings = [reproduce_string(string) for _ in range(100)]
     # list_of_strings.append('METHINKS IT IS LIKE A WEASEL')
     # pprint.pprint(list_of_strings)
     sorted_list_of_strings = sorted(list_of_strings, key=score_string, reverse=True)
