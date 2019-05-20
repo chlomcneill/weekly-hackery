@@ -1,6 +1,5 @@
 import string
 import random
-from difflib import SequenceMatcher
 import pprint
 
 characters = list(string.ascii_uppercase + ' ')
@@ -30,36 +29,23 @@ def score_string(string):
     return score
 
 
-def fitness_comparator(string1, string2):
-    return score_string(string1) - score_string(string2)
+def monkey_simulator(string):
+    list_of_strings = [reproduce_string(string) for i in range(100)]
+    # list_of_strings.append('METHINKS IT IS LIKE A WEASEL')
+    # pprint.pprint(list_of_strings)
+    sorted_list_of_strings = sorted(list_of_strings, key=score_string, reverse=True)
+    # pprint.pprint(sorted_list_of_strings)
+    best_match = sorted_list_of_strings[0]
+    return best_match, score_string(best_match)
 
 
-# print(score_string('METHINKX IT ISOLIKE A WEASEL'))
+def main():
+    iteration = 0
+    (string, score) = monkey_simulator(random_string(28))
+    while score < 28:
+        (string, score) = monkey_simulator(string)
+        iteration += 1
+        print(iteration, score, string)
 
 
-# def monkey_simulator(string):
-#     score = 0
-#
-#     for i in range(100):
-#         new_string = reproduce_string(string)
-#         if
-
-
-list_of_strings = [random_string(28) for i in range(100)]
-list_of_strings.append('METHINKS IT IS LIKE A WEASEL')
-
-# list_of_strings.sort(fitness_comparator)
-pprint.pprint(list_of_strings)
-sorted_list_of_strings = sorted(list_of_strings, key=score_string, reverse=True)
-
-pprint.pprint(sorted_list_of_strings)
-
-
-
-    # print(new_string, score_string(new_string))
-    # print(scores)
-
-#
-# def main():
-#     string = random_string(28)
-#     monkey_simulator(string)
+main()
