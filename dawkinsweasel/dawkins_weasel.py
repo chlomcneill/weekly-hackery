@@ -44,7 +44,7 @@ def main():
     while score < 28:
         (string, score) = monkey_simulator(string)
         iteration += 1
-        print(iteration, score, string)
+        print("Iteration: " + str(iteration) + ", Score: " + str(score) + ", " + string)
 
 
 main()
