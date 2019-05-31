@@ -1,5 +1,5 @@
 from unittest import TestCase
-from dawkins_weasel import score_string
+from dawkinsweasel.dawkins_weasel import score_string, monkey_simulator
 
 
 class TestDawkinsWeasel(TestCase):
@@ -15,3 +15,15 @@ class TestDawkinsWeasel(TestCase):
         string = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
         # Then
         self.assertEqual(score_string(string), 0)
+
+    def test_score_string_when_string_is_similar_to_target(self):
+        # Given
+        string = 'METHINKS IT XXXXXXXXXXXXXXXX'
+        # Then
+        self.assertEqual(score_string(string), 12)
+
+    def test_monkey_simulator_returns_best_match(self):
+        # Given
+        list_of_strings = ['PYCHIYSCLLFPZYYLVFJTAJGOIUMM', 'METHINKC ITSFY LIKE A WEAUML', 'METHINKS IT IS LIKE A WEASEL']
+        # Then
+        self.assertEqual(monkey_simulator(list_of_strings), 'METHINKS IT IS LIKE A WEASEL')

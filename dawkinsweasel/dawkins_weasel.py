@@ -28,21 +28,23 @@ def score_string(string):
     return score
 
 
-def monkey_simulator(string):
-    list_of_strings = [reproduce_string(string) for _ in range(100)]
-    # list_of_strings.append('METHINKS IT IS LIKE A WEASEL')
-    # pprint.pprint(list_of_strings)
+def copies_of_string(string, copies):
+    return [reproduce_string(string) for _ in range(copies)]
+
+
+def monkey_simulator(list_of_strings):
     sorted_list_of_strings = sorted(list_of_strings, key=score_string, reverse=True)
-    # pprint.pprint(sorted_list_of_strings)
     best_match = sorted_list_of_strings[0]
-    return best_match, score_string(best_match)
+    return best_match
 
 
 def main():
     iteration = 0
-    (string, score) = monkey_simulator(random_string(28))
+    string = monkey_simulator(copies_of_string(random_string(28), 100))
+    score = score_string(string)
     while score < 28:
-        (string, score) = monkey_simulator(string)
+        string = monkey_simulator(copies_of_string(string, 100))
+        score = score_string(string)
         iteration += 1
         print("Iteration: " + str(iteration) + ", Score: " + str(score) + ", " + string)
 
