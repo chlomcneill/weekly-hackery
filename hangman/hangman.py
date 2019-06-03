@@ -15,7 +15,7 @@ def random_word():
 
 def guessing(target):
     blanks = list('-' * len(target))
-    # print(target)
+    print(target)
     print(' '.join(blanks))
     guesses = []
     while blanks != list(target):
@@ -24,9 +24,10 @@ def guessing(target):
             print("You've already guessed that!")
             guess = input("Guess again: ")
         guesses += guess
-        for char in target:
-            if guess == char:
-                blanks[target.index(char)] = guess
+        if target.count(guess) > 0:
+            indices = [i for i, a in enumerate(target) if a == guess]
+            for index in indices:
+                blanks[index] = guess
         print(' '.join(blanks))
 
 
