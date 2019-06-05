@@ -18,23 +18,34 @@ def guessing(target):
     print(target)
     print(' '.join(blanks))
     guesses = []
+    bad_guesses = 0
     while blanks != list(target):
-        guess = input("Guess a letter: ")
-        if guess in guesses:
-            print("You've already guessed that!")
-            guess = input("Guess again: ")
-        guesses += guess
-        if target.count(guess) > 0:
-            indices = [i for i, a in enumerate(target) if a == guess]
-            for index in indices:
-                blanks[index] = guess
-        print(' '.join(blanks))
+        if bad_guesses < 6:
+            guess = input("Guess a letter: ")
+            if guess in guesses:
+                print("You've already guessed that!")
+                guess = input("Guess again: ")
+            guesses += guess
+            if target.count(guess) > 0:
+                indices = [i for i, a in enumerate(target) if a == guess]
+                for index in indices:
+                    blanks[index] = guess
+            else:
+                bad_guesses += 1
+            print(' '.join(blanks))
+        else:
+            return False
+    return True
 
 
 def hangman():
+    print("Let's play hangman!")
     target = random_word()
-    guessing(target)
-    print("Congratulations! The word was: " + target)
+    play = guessing(target)
+    if play:
+        print("Congratulations! The word was: " + target)
+    else:
+        print("You have run out of guesses. The word was: " + target)
 
 
 hangman()
