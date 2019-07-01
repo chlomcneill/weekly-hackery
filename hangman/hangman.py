@@ -3,7 +3,7 @@ from random import randint
 
 f = open("/Users/mcneillc/Dev/weekly-hackery/hangman/google-10000-english.txt", "rb")
 dictionary = f.readlines()
-dictionary = [word.decode("utf-8").strip() for word in dictionary]
+dictionary = [word.decode("utf-8").strip() for word in dictionary if len(word) >= 3]
 f.close()
 
 
