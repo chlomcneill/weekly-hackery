@@ -1,18 +1,18 @@
-ranks = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
+ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
 suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
 
 
 def get_hand_ranks(hand):
     hand_ranks = []
     for card in hand:
-        hand_ranks.append(card[0])
+        hand_ranks.append(card.rank)
     return hand_ranks
 
 
 def get_hand_suits(hand):
     hand_suits = []
     for card in hand:
-        hand_suits.append(card[1])
+        hand_suits.append(card.suit)
     return hand_suits
 
 
@@ -21,13 +21,13 @@ def is_straight(hand):
     hand_ranks.sort(key=lambda x: ranks.index(x))
     if ranks.index(hand_ranks[1]) == ranks.index(hand_ranks[0])+1 and ranks.index(hand_ranks[2]) == ranks.index(hand_ranks[1])+1 and ranks.index(hand_ranks[3]) == ranks.index(hand_ranks[2])+1 and ranks.index(hand_ranks[4]) == ranks.index(hand_ranks[3])+1:
         return True
-    elif hand_ranks == ['Ace', '10', 'Jack', 'Queen', 'King']:
+    elif hand_ranks == ['2', 'Jack', 'Queen', 'King', 'Ace']:
         return True
-    elif hand_ranks == ['Ace', '2', 'Jack', 'Queen', 'King']:
+    elif hand_ranks == ['2', '3', 'Queen', 'King', 'Ace']:
         return True
-    elif hand_ranks == ['Ace', '2', '3', 'Queen', 'King']:
+    elif hand_ranks == ['2', '3', '4', 'King', 'Ace']:
         return True
-    elif hand_ranks == ['Ace', '2', '3', '4', 'King']:
+    elif hand_ranks == ['2', '3', '4', '5', 'Ace']:
         return True
     else:
         return False
@@ -45,7 +45,6 @@ def contains_only_one_pair(hand):
     hand_ranks = get_hand_ranks(hand)
     count = [hand_ranks.count(rank) for rank in list(dict.fromkeys(hand_ranks))]
     count.sort()
-    # print(count)
     if count == [1, 1, 1, 2]:
         return True
     else:
@@ -56,7 +55,6 @@ def contains_three_of_a_kind(hand):
     hand_ranks = get_hand_ranks(hand)
     count = [hand_ranks.count(rank) for rank in list(dict.fromkeys(hand_ranks))]
     count.sort()
-    # print(count)
     if count == [1, 1, 3]:
         return True
     else:
@@ -67,7 +65,6 @@ def contains_two_pairs(hand):
     hand_ranks = get_hand_ranks(hand)
     count = [hand_ranks.count(rank) for rank in list(dict.fromkeys(hand_ranks))]
     count.sort()
-    # print(count)
     if count == [1, 2, 2]:
         return True
     else:
@@ -78,7 +75,6 @@ def is_full_house(hand):
     hand_ranks = get_hand_ranks(hand)
     count = [hand_ranks.count(rank) for rank in list(dict.fromkeys(hand_ranks))]
     count.sort()
-    # print(count)
     if count == [2, 3]:
         return True
     else:
@@ -89,7 +85,6 @@ def contains_four_of_a_kind(hand):
     hand_ranks = get_hand_ranks(hand)
     count = [hand_ranks.count(rank) for rank in list(dict.fromkeys(hand_ranks))]
     count.sort()
-    # print(count)
     if count == [1, 4]:
         return True
     else:
@@ -115,10 +110,7 @@ def is_royal_flush(hand):
 def high_card(hand):
     hand_ranks = get_hand_ranks(hand)
     hand_ranks.sort(key=lambda x: ranks.index(x))
-    if hand_ranks[0] == 'Ace':
-        return 'Ace'
-    else:
-        return hand_ranks[-1]
+    return hand_ranks[-1]
 
 
 def score_hand(hand):
@@ -142,17 +134,3 @@ def score_hand(hand):
         return 2, high_card(hand)
     else:
         return 1, high_card(hand)
-
-
-# test = [('Ace', 'Diamonds'), ('2', 'Diamonds'), ('3', 'Diamonds'), ('King', 'Diamonds'), ('Queen', 'Hearts')]
-# print(is_straight(test))
-# print(is_flush(test))
-# print(is_straight_flush(test))
-# print(contains_only_one_pair(test))
-# print(contains_three_of_a_kind(test))
-# print(contains_two_pairs(test))
-# print(is_full_house(test))
-# print(contains_four_of_a_kind(test))
-# print(is_royal_flush(test))
-# print(score_hand(test))
-
