@@ -1,5 +1,5 @@
 from texasholdem.data_model import Deck, Player
-from texasholdem.scoring import get_hand_ranks
+from texasholdem.scoring import high_card
 
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
@@ -23,18 +23,15 @@ def river(table, deck):
     return table
 
 
-def high_card(hand):
-    hand_ranks = get_hand_ranks(hand)
-    hand_ranks.sort(key=lambda x: ranks.index(x))
-    return hand_ranks[-1]
-
-
 def winning_hand(table, players):
     player_scores = get_player_scores(table, players)
-    if player_scores[-1][1] != player_scores[-2][1]:
+    if player_scores[-1][2] != player_scores[-2][2]:
         winning_hand = player_scores[-1]
     else:
-        highest_ranks = [score[2] == player_scores[-1][2] for score in player_scores]
+        highest_ranks = []
+        for score in player_scores:
+            if score[2] == player_scores[-1][2]:
+                highest_ranks.append(score)
         highest_ranks.sort(key=lambda x: high_card(x[1])) #TODO: tie break
         winning_hand = highest_ranks[-1]
         # winning_hand = tie_break(drawing_player_scores)
@@ -60,10 +57,12 @@ def play():
     for player in players:
         player.draw(deck)
     table = flop(deck)
+    # print(get_player_scores(table, players))
     table = turn(table, deck)
+    # print(get_player_scores(table, players))
     table = river(table, deck)
     winner = winning_hand(table, players)
-    print("The winner is Player " + winner[0] + " with the hand " + str(winner[1]))
+    print("The winner is Player " + winner[0] + "\n Hand: " + str(winner[1]) + "\n Score: " + str(winner[2]))
 
 
 play()
